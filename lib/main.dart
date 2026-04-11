@@ -13,23 +13,26 @@ import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   // Initialize Firebase
   await Firebase.initializeApp();
 
-  // Initialize notifications
-  await NotificationService().initialize();
+  // Initialize notifications and daily reminder (non-blocking)
+  try {
+    await NotificationService().initialize();
 
-  // Auto-schedule the daily reminder from saved preferences
-  final prefs = await SharedPreferences.getInstance();
-  final notifEnabled = prefs.getBool('notifications_enabled') ?? true;
-  if (notifEnabled) {
-    final hour = prefs.getInt('reminder_hour') ?? 8;
-    final minute = prefs.getInt('reminder_minute') ?? 0;
-    await NotificationService().scheduleDailyReminder(
-      hour: hour,
-      minute: minute,
-    );
+    // Auto-schedule the daily reminder from saved preferences
+    final prefs = await SharedPreferences.getInstance();
+    final notifEnabled = prefs.getBool('notifications_enabled') ?? true;
+    if (notifEnabled) {
+      final hour = prefs.getInt('reminder_hour') ?? 8;
+      final minute = prefs.getInt('reminder_minute') ?? 0;
+      await NotificationService().scheduleDailyReminder(
+        hour: hour,
+        minute: minute,
+      );
+    }
+  } catch (e) {
+    debugPrint('Notification init failed: $e');
   }
 
   // Set preferred orientation

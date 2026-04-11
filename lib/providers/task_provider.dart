@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/task_model.dart';
 import '../services/firestore_service.dart';
 
@@ -7,6 +9,8 @@ class TaskProvider extends ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
   List<TaskModel> _tasks = [];
   bool _isLoading = false;
+  StreamSubscription<List<TaskModel>>? _tasksSub;
+  StreamSubscription<User?>? _authSub;
 
   List<TaskModel> get tasks => _tasks;
   bool get isLoading => _isLoading;
@@ -68,10 +72,28 @@ class TaskProvider extends ChangeNotifier {
   }
 
   void init() {
-    _firestoreService.getTasks().listen((tasks) {
+    // Listen to auth state changes and re-subscribe to the correct user's data
+    _authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+      _subscribeTasks();
+    });
+  }
+
+  void _subscribeTasks() {
+    _tasksSub?.cancel();
+    _tasks = [];
+    notifyListeners();
+
+    _tasksSub = _firestoreService.getTasks().listen((tasks) {
       _tasks = tasks;
       notifyListeners();
     });
+  }
+
+  @override
+  void dispose() {
+    _tasksSub?.cancel();
+    _authSub?.cancel();
+    super.dispose();
   }
 
   Future<void> addTask({

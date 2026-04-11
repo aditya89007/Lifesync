@@ -17,11 +17,13 @@ class NotificationService {
 
   Future<void> initialize() async {
     tzdata.initializeTimeZones();
-    final timeZoneInfo = await FlutterTimezone.getLocalTimezone();
-    
-    // In some versions getLocalTimezone returns a String, in v5+ it returns a TimezoneInfo object.
-    // We handle the TimezoneInfo object here.
-    tz.setLocalLocation(tz.getLocation(timeZoneInfo.identifier));
+    try {
+      final timeZoneInfo = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timeZoneInfo.identifier));
+    } catch (e) {
+      debugPrint('[NotificationService] Timezone init failed: $e, using UTC');
+      tz.setLocalLocation(tz.UTC);
+    }
 
     // Local notifications setup
     const androidSettings = AndroidInitializationSettings(

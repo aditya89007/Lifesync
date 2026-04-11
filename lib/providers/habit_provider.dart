@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/habit_model.dart';
 import '../services/firestore_service.dart';
 
@@ -7,6 +9,8 @@ class HabitProvider extends ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
   List<HabitModel> _habits = [];
   bool _isLoading = false;
+  StreamSubscription<List<HabitModel>>? _habitsSub;
+  StreamSubscription<User?>? _authSub;
 
   List<HabitModel> get habits => _habits;
   bool get isLoading => _isLoading;
@@ -22,10 +26,28 @@ class HabitProvider extends ChangeNotifier {
   }
 
   void init() {
-    _firestoreService.getHabits().listen((habits) {
+    // Listen to auth state changes and re-subscribe to the correct user's data
+    _authSub = FirebaseAuth.instance.authStateChanges().listen((user) {
+      _subscribeHabits();
+    });
+  }
+
+  void _subscribeHabits() {
+    _habitsSub?.cancel();
+    _habits = [];
+    notifyListeners();
+
+    _habitsSub = _firestoreService.getHabits().listen((habits) {
       _habits = habits;
       notifyListeners();
     });
+  }
+
+  @override
+  void dispose() {
+    _habitsSub?.cancel();
+    _authSub?.cancel();
+    super.dispose();
   }
 
   Future<void> addHabit({
