@@ -189,7 +189,7 @@ You have the right to request the deletion of your account and all associated da
 
 ### 6. Contact Us
 
-If you have any questions about this Privacy Policy, please contact the developer at: **adityapatel89007@gmail.com**
+If you have any questions about this Privacy Policy, please contact the developer at: **adityarajchudasama2910@gmail.com**
 
 ---
 
@@ -211,11 +211,17 @@ This project is licensed under the MIT License.
 
 ---
 
+## 👨‍💻 Author
+
+**Adityaraj Chudasama** — [@aditya89007](https://github.com/aditya89007)
+
+---
+
 ## 📧 Contact
 
 - **Project Link:** [https://github.com/aditya89007/Lifesync](https://github.com/aditya89007/Lifesync)
-- **Developer:** Aditya Patel
-- **Email:** adityapatel89007@gmail.com
+- **Developer:** Adityaraj Chudasama
+- **Email:** adityarajchudasama2910@gmail.com
 
 ---
 
