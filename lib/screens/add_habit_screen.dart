@@ -4,6 +4,7 @@ import '../models/habit_model.dart';
 import '../providers/habit_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/soft_card.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class AddHabitScreen extends StatefulWidget {
   const AddHabitScreen({super.key});
@@ -49,7 +50,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Habit'),
+        title: Text(AppLocalizations.of(context)!.addNewHabit),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 20),
           onPressed: () => Navigator.pop(context),
@@ -92,7 +93,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                         const SizedBox(height: 12),
                         Text(
                           _nameController.text.isEmpty
-                              ? 'Your Habit'
+                              ? AppLocalizations.of(context)!.yourHabit
                               : _nameController.text,
                           style: Theme.of(context)
                               .textTheme
@@ -110,7 +111,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            _selectedFrequency.toUpperCase(),
+                            _selectedFrequency == 'daily' ? AppLocalizations.of(context)!.daily.toUpperCase() : _selectedFrequency == 'weekly' ? AppLocalizations.of(context)!.weekly.toUpperCase() : AppLocalizations.of(context)!.custom.toUpperCase(),
                             style: TextStyle(
                               color: _selectedColor,
                               fontSize: 11,
@@ -127,7 +128,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                 const SizedBox(height: 24),
 
                 // Habit Name
-                Text('Habit Name',
+                Text(AppLocalizations.of(context)!.habitName,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -137,9 +138,9 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                             ? AppColors.darkTextPrimary
                             : AppColors.lightTextPrimary,
                       ),
-                  decoration: const InputDecoration(
-                    hintText: 'e.g., Drink Water, Exercise',
-                    prefixIcon: Icon(
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.egDrinkWater,
+                    prefixIcon: const Icon(
                       Icons.edit_outlined,
                       color: AppColors.accent,
                     ),
@@ -147,7 +148,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                   onChanged: (_) => setState(() {}),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Please enter a habit name';
+                      return AppLocalizations.of(context)!.pleaseEnterHabitName;
                     }
                     return null;
                   },
@@ -156,7 +157,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                 const SizedBox(height: 24),
 
                 // Icon Selector
-                Text('Choose Icon',
+                Text(AppLocalizations.of(context)!.chooseIcon,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 SoftCard(
@@ -211,7 +212,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                 const SizedBox(height: 24),
 
                 // Frequency
-                Text('Frequency',
+                Text(AppLocalizations.of(context)!.frequency,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 Row(
@@ -245,7 +246,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                             ),
                             child: Center(
                               child: Text(
-                                freq[0].toUpperCase() + freq.substring(1),
+                                freq == 'daily' ? AppLocalizations.of(context)!.daily : freq == 'weekly' ? AppLocalizations.of(context)!.weekly : AppLocalizations.of(context)!.custom,
                                 style: TextStyle(
                                   color: isSelected
                                       ? AppColors.accent
@@ -269,7 +270,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                 const SizedBox(height: 24),
 
                 // Color Picker
-                Text('Color',
+                Text(AppLocalizations.of(context)!.color,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 Row(
@@ -322,14 +323,14 @@ class _AddHabitScreenState extends State<AddHabitScreen>
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.add_circle_outline, size: 22),
-                        SizedBox(width: 8),
+                        const Icon(Icons.add_circle_outline, size: 22),
+                        const SizedBox(width: 8),
                         Text(
-                          'Create Habit',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.createHabit,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -359,7 +360,7 @@ class _AddHabitScreenState extends State<AddHabitScreen>
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Habit created! Start your streak! 🔥'),
+          content: Text(AppLocalizations.of(context)!.habitCreated),
           backgroundColor: _selectedColor,
           behavior: SnackBarBehavior.floating,
           shape:

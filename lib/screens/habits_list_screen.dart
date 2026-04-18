@@ -5,6 +5,7 @@ import '../theme/app_theme.dart';
 import '../widgets/habit_card.dart';
 import '../widgets/glass_card.dart';
 import 'edit_habit_screen.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class HabitsListScreen extends StatelessWidget {
   const HabitsListScreen({super.key});
@@ -28,7 +29,7 @@ class HabitsListScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Habits',
+                          AppLocalizations.of(context)!.habits,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         if (habitProvider.habits.isNotEmpty)
@@ -40,7 +41,7 @@ class HabitsListScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              '${habitProvider.completedTodayCount}/${habitProvider.totalHabits} today',
+                              AppLocalizations.of(context)!.done(habitProvider.completedTodayCount, habitProvider.totalHabits),
                               style: const TextStyle(
                                 color: AppColors.accent,
                                 fontWeight: FontWeight.w600,
@@ -66,7 +67,7 @@ class HabitsListScreen extends StatelessWidget {
                             _StatItem(
                               icon: Icons.repeat,
                               value: '${habitProvider.totalHabits}',
-                              label: 'Active',
+                              label: AppLocalizations.of(context)!.activeLabel,
                               color: AppColors.accent,
                             ),
                             Container(
@@ -79,7 +80,7 @@ class HabitsListScreen extends StatelessWidget {
                             _StatItem(
                               icon: Icons.check_circle_outline,
                               value: '${habitProvider.completedTodayCount}',
-                              label: 'Done Today',
+                              label: AppLocalizations.of(context)!.doneTodayLabel,
                               color: AppColors.priorityLow,
                             ),
                             Container(
@@ -92,7 +93,7 @@ class HabitsListScreen extends StatelessWidget {
                             _StatItem(
                               icon: Icons.local_fire_department,
                               value: _getBestStreak(habitProvider),
-                              label: 'Best Streak',
+                              label: AppLocalizations.of(context)!.bestStreakLabel,
                               color: AppColors.priorityMedium,
                             ),
                           ],
@@ -119,7 +120,7 @@ class HabitsListScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'No habits yet',
+                              AppLocalizations.of(context)!.noHabitsYet,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -131,7 +132,7 @@ class HabitsListScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Start building positive habits today!',
+                              AppLocalizations.of(context)!.startBuildingHabitsToday,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],

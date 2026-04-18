@@ -10,6 +10,7 @@ import '../widgets/task_card.dart';
 import '../widgets/habit_card.dart';
 import '../widgets/animated_progress_ring.dart';
 import '../widgets/date_selector.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          'Good ${_getGreeting()}, $userName! 👋',
+                          '${_getGreeting(context)}, $userName! 👋',
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium
@@ -117,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             Text(
-                              'Daily Progress',
+                              AppLocalizations.of(context)!.dailyProgress,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
@@ -126,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(height: 4),
                             Text(
                               _getProgressMessage(
+                                context,
                                 pendingCount,
                                 totalItems,
                                 completedItems,
@@ -139,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             AnimatedProgressRing(
                               progress: overallProgress,
                               size: 140,
-                              label: 'completed',
+                              label: AppLocalizations.of(context)!.completedProgress,
                             ),
                             const SizedBox(height: 16),
                             Row(
@@ -147,20 +149,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 _StatChip(
                                   icon: Icons.check_circle_outline,
-                                  label: 'Tasks',
+                                  label: AppLocalizations.of(context)!.tasks,
                                   value:
                                       '${taskProvider.todayCompletedTasks.length}/$totalTasks',
                                   color: AppColors.priorityLow,
                                 ),
                                 _StatChip(
                                   icon: Icons.repeat,
-                                  label: 'Habits',
+                                  label: AppLocalizations.of(context)!.habits,
                                   value: '$completedHabits/$totalHabits',
                                   color: AppColors.accent,
                                 ),
                                 _StatChip(
                                   icon: Icons.local_fire_department,
-                                  label: 'Streaks',
+                                  label: AppLocalizations.of(context)!.streaks,
                                   value: _getBestStreak(habitProvider),
                                   color: AppColors.priorityMedium,
                                 ),
@@ -189,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Overdue',
+                            AppLocalizations.of(context)!.overdue,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
@@ -257,14 +259,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'Habits',
+                                AppLocalizations.of(context)!.habits,
                                 style:
                                     Theme.of(context).textTheme.titleLarge,
                               ),
                             ],
                           ),
                           Text(
-                            '$completedHabits/$totalHabits done',
+                            AppLocalizations.of(context)!.done(completedHabits, totalHabits),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -314,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(width: 8),
                             Text(
                               _isToday
-                                  ? "Today's Tasks"
+                                  ? AppLocalizations.of(context)!.todaysTasks
                                   : DateFormat('MMM d').format(_selectedDate),
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
@@ -322,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         if (selectedDateTasks.isNotEmpty)
                           Text(
-                            '${selectedDateTasks.where((t) => !t.isCompleted).length} remaining',
+                            AppLocalizations.of(context)!.remaining(selectedDateTasks.where((t) => !t.isCompleted).length),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -351,8 +353,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(height: 12),
                             Text(
                               _isToday
-                                  ? 'No tasks for today'
-                                  : 'No tasks for this date',
+                                  ? AppLocalizations.of(context)!.noTasksToday
+                                  : AppLocalizations.of(context)!.noTasksForThisDate,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge
@@ -364,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Tap + to add a new task',
+                              AppLocalizations.of(context)!.tapToAddNewTask,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -409,12 +411,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Upcoming',
+                            AppLocalizations.of(context)!.upcoming,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Next 7 days',
+                            AppLocalizations.of(context)!.next7Days,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -438,7 +440,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4, bottom: 4),
                                   child: Text(
-                                    _getRelativeDate(task.date),
+                                    _getRelativeDate(context, task.date),
                                     style: const TextStyle(
                                       color: AppColors.categoryPersonal,
                                       fontSize: 12,
@@ -475,28 +477,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  String _getRelativeDate(DateTime date) {
+  String _getRelativeDate(BuildContext context, DateTime date) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final target = DateTime(date.year, date.month, date.day);
     final diff = target.difference(today).inDays;
-    if (diff == 1) return 'Tomorrow';
-    if (diff <= 7) return 'In $diff days';
+    if (diff == 1) return AppLocalizations.of(context)!.tomorrow;
+    if (diff <= 7) return AppLocalizations.of(context)!.inDays(diff);
     return DateFormat('MMM d').format(date);
   }
 
-  String _getGreeting() {
+  String _getGreeting(BuildContext context) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Morning';
-    if (hour < 17) return 'Afternoon';
-    return 'Evening';
+    if (hour < 12) return AppLocalizations.of(context)!.goodMorning;
+    if (hour < 17) return AppLocalizations.of(context)!.goodAfternoon;
+    return AppLocalizations.of(context)!.goodEvening;
   }
 
-  String _getProgressMessage(int pending, int total, int completed) {
-    if (total == 0) return 'Add tasks & habits to get started!';
-    if (completed == total) return 'Amazing! All done for today! 🎉';
-    if (pending <= 3) return 'Almost there! $pending left to go! 💪';
-    return 'Keep going! $completed of $total completed';
+  String _getProgressMessage(BuildContext context, int pending, int total, int completed) {
+    if (total == 0) return AppLocalizations.of(context)!.addTasksToGetStarted;
+    if (completed == total) return AppLocalizations.of(context)!.allDoneForToday;
+    if (pending <= 3) return AppLocalizations.of(context)!.almostThere(pending);
+    return AppLocalizations.of(context)!.keepGoing(completed, total);
   }
 
   String _getBestStreak(HabitProvider provider) {

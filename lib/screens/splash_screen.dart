@@ -218,7 +218,7 @@ class _SplashScreenState extends State<SplashScreen>
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 60),
+              padding: const EdgeInsets.only(bottom: 180), // Increased to prevent overlap
               child: AnimatedBuilder(
                 animation: _controller,
                 builder: (context, child) {
@@ -236,6 +236,59 @@ class _SplashScreenState extends State<SplashScreen>
                           ),
                         ),
                       ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          // Powered By Section
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: _fadeAnimation.value,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'Powered By:',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Image.asset(
+                            'assets/images/mu_logo.png',
+                            height: 60,
+                            // Adding errorBuilder ensures the app won't crash if the image is missing yet
+                            errorBuilder: (context, error, stackTrace) =>
+                                const SizedBox(
+                              height: 60,
+                              width: 200,
+                              child: Center(
+                                child: Text(
+                                  'Marwadi University Logo',
+                                  style: TextStyle(color: Colors.black54),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },

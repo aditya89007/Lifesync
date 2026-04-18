@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class FocusTimerScreen extends StatefulWidget {
   const FocusTimerScreen({super.key});
@@ -114,7 +115,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen>
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Text(
-                'Focus Timer',
+                AppLocalizations.of(context)!.focusTimerTitle,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
@@ -175,7 +176,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          _isBreak ? 'BREAK' : 'FOCUS',
+                          _isBreak ? AppLocalizations.of(context)!.breakLabel : AppLocalizations.of(context)!.focusLabel,
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -274,7 +275,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen>
                   children: [
                     _SessionStat(
                       icon: Icons.local_fire_department,
-                      label: 'Sessions',
+                      label: AppLocalizations.of(context)!.sessionsLabel,
                       value: '$_sessionsCompleted',
                       color: AppColors.priorityMedium,
                     ),
@@ -287,7 +288,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen>
                     ),
                     _SessionStat(
                       icon: Icons.timer_outlined,
-                      label: 'Focus Time',
+                      label: AppLocalizations.of(context)!.focusTimeLabel,
                       value: '${_sessionsCompleted * _workMinutes}m',
                       color: AppColors.accent,
                     ),
@@ -300,7 +301,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen>
                     ),
                     _SessionStat(
                       icon: Icons.emoji_events_outlined,
-                      label: 'Goal',
+                      label: AppLocalizations.of(context)!.goalLabel,
                       value: '4',
                       color: AppColors.categoryPersonal,
                     ),
@@ -334,9 +335,9 @@ class _FocusTimerScreenState extends State<FocusTimerScreen>
                         color: AppColors.accent,
                       ),
                       const SizedBox(width: 6),
-                      const Text(
-                        'Reset Sessions',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.resetSessions,
+                        style: const TextStyle(
                           color: AppColors.accent,
                           fontWeight: FontWeight.w600,
                           fontSize: 13,

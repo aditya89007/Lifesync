@@ -4,10 +4,12 @@ import '../providers/theme_provider.dart';
 import '../providers/auth_provider.dart';
 import '../services/notification_service.dart';
 import '../services/firestore_service.dart';
+import '../providers/language_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
 import 'login_screen.dart';
 import 'privacy_policy_screen.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -15,6 +17,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final languageProvider = Provider.of<LanguageProvider>(context);
 
     return Consumer2<ThemeProvider, AuthProvider>(
       builder: (context, themeProvider, authProvider, _) {
@@ -28,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: Text(
-                      'Settings',
+                      AppLocalizations.of(context)!.settings,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
@@ -98,7 +101,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
                     child: Text(
-                      'Notifications',
+                      AppLocalizations.of(context)!.notifications,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
@@ -113,8 +116,8 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           _SettingsTile(
                             icon: Icons.notifications_outlined,
-                            title: 'Push Notifications',
-                            subtitle: 'Receive daily reminders',
+                            title: AppLocalizations.of(context)!.pushNotifications,
+                            subtitle: AppLocalizations.of(context)!.receiveDailyReminders,
                             trailing: Switch(
                               value: themeProvider.notificationsEnabled,
                               onChanged: (val) {
@@ -140,7 +143,7 @@ class SettingsScreen extends StatelessWidget {
                           ),
                           _SettingsTile(
                             icon: Icons.access_time_outlined,
-                            title: 'Reminder Time',
+                            title: AppLocalizations.of(context)!.reminderTime,
                             subtitle: themeProvider.reminderTimeFormatted,
                             trailing: Icon(
                               Icons.chevron_right,
@@ -163,7 +166,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
                     child: Text(
-                      'Appearance',
+                      AppLocalizations.of(context)!.appearance,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
@@ -178,10 +181,10 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           _SettingsTile(
                             icon: Icons.dark_mode_outlined,
-                            title: 'Dark Mode',
+                            title: AppLocalizations.of(context)!.darkMode,
                             subtitle: themeProvider.isDarkMode
-                                ? 'Dark theme active'
-                                : 'Light theme active',
+                                ? AppLocalizations.of(context)!.darkThemeActive
+                                : AppLocalizations.of(context)!.lightThemeActive,
                             trailing: Switch(
                               value: themeProvider.isDarkMode,
                               onChanged: (_) => themeProvider.toggleTheme(),
@@ -196,27 +199,15 @@ class SettingsScreen extends StatelessWidget {
                           ),
                           _SettingsTile(
                             icon: Icons.language_outlined,
-                            title: 'Language',
-                            subtitle: 'English (Default)',
+                            title: AppLocalizations.of(context)!.language,
+                            subtitle: _getLanguageName(languageProvider.currentLocale.languageCode),
                             trailing: Icon(
                               Icons.chevron_right,
                               color: isDark
                                   ? AppColors.darkTextTertiary
                                   : AppColors.lightTextTertiary,
                             ),
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                      'English is the default language. Support for more languages coming soon!'),
-                                  backgroundColor: AppColors.accent,
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              );
-                            },
+                            onTap: () => _showLanguageDialog(context, languageProvider),
                           ),
                         ],
                       ),
@@ -229,7 +220,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
                     child: Text(
-                      'Data & Account',
+                      AppLocalizations.of(context)!.dataAndAccount,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
@@ -244,8 +235,8 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           _SettingsTile(
                             icon: Icons.cloud_sync_outlined,
-                            title: 'Sync Data',
-                            subtitle: 'Synced with Firebase Cloud',
+                            title: AppLocalizations.of(context)!.syncData,
+                            subtitle: AppLocalizations.of(context)!.syncedWithFirebaseCloud,
                             trailing: const Icon(
                               Icons.check_circle,
                               color: AppColors.priorityLow,
@@ -261,8 +252,8 @@ class SettingsScreen extends StatelessWidget {
                           ),
                           _SettingsTile(
                             icon: Icons.delete_outline,
-                            title: 'Clear All Data',
-                            subtitle: 'Delete all tasks and habits',
+                            title: AppLocalizations.of(context)!.clearAllData,
+                            subtitle: AppLocalizations.of(context)!.deleteAllTasksAndHabits,
                             iconColor: AppColors.priorityHigh,
                             titleColor: AppColors.priorityHigh,
                             onTap: () => _showClearDataDialog(context),
@@ -276,8 +267,8 @@ class SettingsScreen extends StatelessWidget {
                           ),
                           _SettingsTile(
                             icon: Icons.logout,
-                            title: 'Sign Out',
-                            subtitle: 'Log out of your account',
+                            title: AppLocalizations.of(context)!.signOut,
+                            subtitle: AppLocalizations.of(context)!.logOutOfYourAccount,
                             iconColor: AppColors.priorityMedium,
                             onTap: () => _showLogoutDialog(context, authProvider),
                           ),
@@ -292,7 +283,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
                     child: Text(
-                      'About',
+                      AppLocalizations.of(context)!.about,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
@@ -307,7 +298,7 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           _SettingsTile(
                             icon: Icons.info_outline,
-                            title: 'Version',
+                            title: AppLocalizations.of(context)!.version,
                             subtitle: '1.0.0 (Build 1)',
                             trailing: Icon(
                               Icons.chevron_right,
@@ -324,8 +315,124 @@ class SettingsScreen extends StatelessWidget {
                                 : AppColors.lightDivider,
                           ),
                           _SettingsTile(
+                            icon: Icons.code_rounded,
+                            title: 'Developed By',
+                            trailing: Icon(
+                              Icons.chevron_right,
+                              color: isDark
+                                  ? AppColors.darkTextTertiary
+                                  : AppColors.lightTextTertiary,
+                            ),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    elevation: 8,
+                                    color: isDark ? AppColors.darkCard : AppColors.lightCard,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(28.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            height: 80,
+                                            width: 80,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  AppColors.accent,
+                                                  AppColors.accentLight,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                            ),
+                                            child: const Icon(
+                                              Icons.code,
+                                              size: 40,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          const Text(
+                                            'DEVELOPED BY',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: AppColors.accent,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 2.0,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          const Text(
+                                            'Adityaraj Chudasama',
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          const SizedBox(height: 6),
+                                          Text(
+                                            'B.Tech Computer Engineering',
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                              color: isDark
+                                                  ? AppColors.darkTextSecondary
+                                                  : AppColors.lightTextSecondary,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          const SizedBox(height: 32),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            height: 48,
+                                            child: ElevatedButton(
+                                              onPressed: () => Navigator.pop(context),
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: AppColors.accent,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(14),
+                                                ),
+                                                elevation: 0,
+                                              ),
+                                              child: const Text(
+                                                'Cool!',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          Divider(
+                            height: 1,
+                            indent: 56,
+                            color: isDark
+                                ? AppColors.darkDivider
+                                : AppColors.lightDivider,
+                          ),
+                          _SettingsTile(
                             icon: Icons.lock_outline,
-                            title: 'Privacy Policy',
+                            title: AppLocalizations.of(context)!.privacyPolicy,
                             trailing: Icon(
                               Icons.chevron_right,
                               color: isDark
@@ -380,6 +487,83 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  String _getLanguageName(String code) {
+    switch (code) {
+      case 'es': return 'Español';
+      case 'hi': return 'हिन्दी';
+      case 'fr': return 'Français';
+      case 'de': return 'Deutsch';
+      case 'gu': return 'ગુજરાતી';
+      default: return 'English';
+    }
+  }
+
+  void _showLanguageDialog(BuildContext context, LanguageProvider languageProvider) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.darkCard
+            : AppColors.lightCard,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(AppLocalizations.of(context)!.selectLanguage),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('English'),
+              trailing: languageProvider.currentLocale.languageCode == 'en' ? const Icon(Icons.check, color: AppColors.accent) : null,
+              onTap: () {
+                languageProvider.setLanguage('en');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Español'),
+              trailing: languageProvider.currentLocale.languageCode == 'es' ? const Icon(Icons.check, color: AppColors.accent) : null,
+              onTap: () {
+                languageProvider.setLanguage('es');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('हिन्दी (Hindi)'),
+              trailing: languageProvider.currentLocale.languageCode == 'hi' ? const Icon(Icons.check, color: AppColors.accent) : null,
+              onTap: () {
+                languageProvider.setLanguage('hi');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Français'),
+              trailing: languageProvider.currentLocale.languageCode == 'fr' ? const Icon(Icons.check, color: AppColors.accent) : null,
+              onTap: () {
+                languageProvider.setLanguage('fr');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Deutsch'),
+              trailing: languageProvider.currentLocale.languageCode == 'de' ? const Icon(Icons.check, color: AppColors.accent) : null,
+              onTap: () {
+                languageProvider.setLanguage('de');
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('ગુજરાતી (Gujarati)'),
+              trailing: languageProvider.currentLocale.languageCode == 'gu' ? const Icon(Icons.check, color: AppColors.accent) : null,
+              onTap: () {
+                languageProvider.setLanguage('gu');
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _pickReminderTime(
       BuildContext context, ThemeProvider themeProvider) async {
     final picked = await showTimePicker(
@@ -418,20 +602,20 @@ class SettingsScreen extends StatelessWidget {
             ? AppColors.darkCard
             : AppColors.lightCard,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.warning_amber, color: AppColors.priorityHigh),
-            SizedBox(width: 8),
-            Text('Clear All Data'),
+            const Icon(Icons.warning_amber, color: AppColors.priorityHigh),
+            const SizedBox(width: 8),
+            Text(AppLocalizations.of(context)!.clearAllData),
           ],
         ),
-        content: const Text(
-          'This will permanently delete all your tasks and habits. This action cannot be undone.',
+        content: Text(
+          AppLocalizations.of(context)!.clearDataWarning,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -452,8 +636,8 @@ class SettingsScreen extends StatelessWidget {
                   }
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('All data cleared successfully'),
+                    SnackBar(
+                      content: Text(AppLocalizations.of(context)!.allDataClearedSuccessfully),
                       backgroundColor: AppColors.priorityHigh,
                     ),
                   );
@@ -462,7 +646,7 @@ class SettingsScreen extends StatelessWidget {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Failed to clear data: $e'),
+                      content: Text(AppLocalizations.of(context)!.failedToClearData(e.toString())),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -472,7 +656,7 @@ class SettingsScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.priorityHigh,
             ),
-            child: const Text('Delete All', style: TextStyle(color: Colors.white)),
+            child: Text(AppLocalizations.of(context)!.deleteAll, style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -487,12 +671,12 @@ class SettingsScreen extends StatelessWidget {
             ? AppColors.darkCard
             : AppColors.lightCard,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Sign Out'),
-        content: const Text('Are you sure you want to sign out?'),
+        title: Text(AppLocalizations.of(context)!.signOut),
+        content: Text(AppLocalizations.of(context)!.areYouSureYouWantToSignOut),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -508,7 +692,7 @@ class SettingsScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.priorityMedium,
             ),
-            child: const Text('Sign Out', style: TextStyle(color: Colors.white)),
+            child: Text(AppLocalizations.of(context)!.signOut, style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),

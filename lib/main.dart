@@ -11,6 +11,10 @@ import 'services/notification_service.dart';
 import 'theme/app_theme.dart';
 import 'screens/splash_screen.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
+import 'providers/language_provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize Firebase
@@ -52,12 +56,13 @@ class SmartPlannerApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()..init()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()..init()),
         ChangeNotifierProvider(create: (_) => AuthProvider()..init()),
         ChangeNotifierProvider(create: (_) => TaskProvider()..init()),
         ChangeNotifierProvider(create: (_) => HabitProvider()..init()),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) {
+      child: Consumer2<ThemeProvider, LanguageProvider>(
+        builder: (context, themeProvider, languageProvider, _) {
           // Set system UI overlay style based on theme
           SystemChrome.setSystemUIOverlayStyle(
             themeProvider.isDarkMode
@@ -74,6 +79,14 @@ class SmartPlannerApp extends StatelessWidget {
           return MaterialApp(
             title: 'LifeSync',
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: languageProvider.currentLocale,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,

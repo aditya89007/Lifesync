@@ -1,0 +1,178 @@
+{
+  "@@locale": "en",
+  "appTitle": "LifeSync",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "tasks": "Tasks",
+  "habits": "Habits",
+  "settings": "Settings",
+  "language": "Language",
+  
+  "home": "Home",
+  "focus": "Focus",
+  "createNew": "Create New",
+  "newTask": "New Task",
+  "createAToDo": "Create a to-do",
+  "newHabit": "New Habit",
+  "buildARoutine": "Build a routine",
+
+  "goodMorning": "Good Morning",
+  "goodAfternoon": "Good Afternoon",
+  "goodEvening": "Good Evening",
+  "dailyProgress": "Daily Progress",
+  "addTasksToGetStarted": "Add tasks & habits to get started!",
+  "allDoneForToday": "Amazing! All done for today! 🎉",
+  
+  "almostThere": "Almost there! {pending} left to go! 💪",
+  "@almostThere": {
+    "placeholders": {
+      "pending": { "type": "int" }
+    }
+  },
+  
+  "keepGoing": "Keep going! {completed} of {total} completed",
+  "@keepGoing": {
+    "placeholders": {
+      "completed": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  
+  "completedProgress": "completed",
+  "streaks": "Streaks",
+  "overdue": "Overdue",
+  "upcoming": "Upcoming",
+  "next7Days": "Next 7 days",
+  "todaysTasks": "Today's Tasks",
+  
+  "remaining": "{count} remaining",
+  "@remaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  
+  "noTasksToday": "No tasks for today",
+  "noTasksForThisDate": "No tasks for this date",
+  "tapToAddNewTask": "Tap + to add a new task",
+  "tomorrow": "Tomorrow",
+  
+  "inDays": "In {days} days",
+  "@inDays": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+
+  "notifications": "Notifications",
+  "pushNotifications": "Push Notifications",
+  "receiveDailyReminders": "Receive daily reminders",
+  "reminderTime": "Reminder Time",
+  "appearance": "Appearance",
+  "darkMode": "Dark Mode",
+  "darkThemeActive": "Dark theme active",
+  "lightThemeActive": "Light theme active",
+  "dataAndAccount": "Data & Account",
+  "syncData": "Sync Data",
+  "syncedWithFirebaseCloud": "Synced with Firebase Cloud",
+  "clearAllData": "Clear All Data",
+  "deleteAllTasksAndHabits": "Delete all tasks and habits",
+  "signOut": "Sign Out",
+  "logOutOfYourAccount": "Log out of your account",
+  "about": "About",
+  "version": "Version",
+  "privacyPolicy": "Privacy Policy",
+  "selectLanguage": "Select Language",
+  "clearDataWarning": "This will permanently delete all your tasks and habits. This action cannot be undone.",
+  "cancel": "Cancel",
+  "deleteAll": "Delete All",
+  "allDataClearedSuccessfully": "All data cleared successfully",
+  
+  "failedToClearData": "Failed to clear data: {error}",
+  "@failedToClearData": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  
+  "areYouSureYouWantToSignOut": "Are you sure you want to sign out?",
+  "done": "{completed}/{total} done",
+  "@done": {
+    "placeholders": {
+      "completed": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "createSomethingAmazing": "Create something amazing",
+  "secretOfGettingAhead": "\"The secret of getting ahead\\nis getting started.\"",
+  "taskTitle": "Task Title",
+  "whatDoYouNeedToDo": "What do you need to do?",
+  "pleaseEnterTaskTitle": "Please enter a task title",
+  "description": "Description",
+  "addSomeDetails": "Add some details (optional)",
+  "dueDate": "Due Date",
+  "priority": "Priority",
+  "category": "Category",
+  "createTask": "Create Task",
+  "taskCreated": "Task created! 🎯",
+  "low": "Low",
+  "medium": "Medium",
+  "high": "High",
+  "personal": "Personal",
+  "work": "Work",
+  "health": "Health",
+  "education": "Education",
+  "other": "Other",
+  "addNewHabit": "Add New Habit",
+  "yourHabit": "Your Habit",
+  "habitName": "Habit Name",
+  "egDrinkWater": "e.g., Drink Water, Exercise",
+  "pleaseEnterHabitName": "Please enter a habit name",
+  "chooseIcon": "Choose Icon",
+  "frequency": "Frequency",
+  "daily": "Daily",
+  "weekly": "Weekly",
+  "custom": "Custom",
+  "color": "Color",
+  "createHabit": "Create Habit",
+  "habitCreated": "Habit created! Start your streak! 🔥",
+
+  "allTasks": "All Tasks",
+  "searchTasks": "Search tasks...",
+  "allFilter": "All",
+  "pendingFilter": "Pending",
+  "doneFilter": "Done",
+  "noResultsFor": "No results for \"{query}\"",
+  "@noResultsFor": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  },
+  "noCompletedTasksYet": "No completed tasks yet",
+  "noOverdueTasks": "No overdue tasks! \uD83C\uDF89",
+  "allCaughtUp": "All caught up! \uD83C\uDF89",
+  "tryDifferentSearchTerm": "Try a different search term",
+  "tapToCreateFirstTask": "Tap + to create your first task",
+  
+  "totalCount": "{length} total",
+  "@totalCount": {
+    "placeholders": {
+      "length": { "type": "int" }
+    }
+  },
+  
+  "activeLabel": "Active",
+  "doneTodayLabel": "Done Today",
+  "bestStreakLabel": "Best Streak",
+  "noHabitsYet": "No habits yet",
+  "startBuildingHabitsToday": "Start building positive habits today!",
+
+  "focusTimerTitle": "Focus Timer",
+  "breakLabel": "BREAK",
+  "focusLabel": "FOCUS",
+  "sessionsLabel": "Sessions",
+  "focusTimeLabel": "Focus Time",
+  "goalLabel": "Goal",
+  "resetSessions": "Reset Sessions"
+}

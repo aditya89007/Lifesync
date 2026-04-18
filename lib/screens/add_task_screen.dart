@@ -5,6 +5,7 @@ import '../models/task_model.dart';
 import '../providers/task_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/soft_card.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -52,7 +53,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Task'),
+        title: Text(AppLocalizations.of(context)!.newTask),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 20),
           onPressed: () => Navigator.pop(context),
@@ -94,12 +95,12 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Create something amazing',
+                              AppLocalizations.of(context)!.createSomethingAmazing,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '"The secret of getting ahead\nis getting started."',
+                              AppLocalizations.of(context)!.secretOfGettingAhead,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
@@ -118,7 +119,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                 const SizedBox(height: 24),
 
                 // Title
-                Text('Task Title',
+                Text(AppLocalizations.of(context)!.taskTitle,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -128,13 +129,13 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                             ? AppColors.darkTextPrimary
                             : AppColors.lightTextPrimary,
                       ),
-                  decoration: const InputDecoration(
-                    hintText: 'What do you need to do?',
-                    prefixIcon: Icon(Icons.edit_outlined, color: AppColors.accent),
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.whatDoYouNeedToDo,
+                    prefixIcon: const Icon(Icons.edit_outlined, color: AppColors.accent),
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Please enter a task title';
+                      return AppLocalizations.of(context)!.pleaseEnterTaskTitle;
                     }
                     return null;
                   },
@@ -143,7 +144,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                 const SizedBox(height: 20),
 
                 // Description
-                Text('Description',
+                Text(AppLocalizations.of(context)!.description,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -154,9 +155,9 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                             ? AppColors.darkTextPrimary
                             : AppColors.lightTextPrimary,
                       ),
-                  decoration: const InputDecoration(
-                    hintText: 'Add some details (optional)',
-                    prefixIcon: Padding(
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.addSomeDetails,
+                    prefixIcon: const Padding(
                       padding: EdgeInsets.only(bottom: 48),
                       child: Icon(Icons.notes_outlined, color: AppColors.accent),
                     ),
@@ -166,7 +167,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                 const SizedBox(height: 20),
 
                 // Date Picker
-                Text('Due Date',
+                Text(AppLocalizations.of(context)!.dueDate,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 SoftCard(
@@ -203,7 +204,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                 const SizedBox(height: 20),
 
                 // Priority
-                Text('Priority',
+                Text(AppLocalizations.of(context)!.priority,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 Row(
@@ -252,7 +253,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  _getPriorityLabel(priority),
+                                  _getPriorityLabel(context, priority),
                                   style: TextStyle(
                                     color: isSelected
                                         ? color
@@ -277,7 +278,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                 const SizedBox(height: 20),
 
                 // Category
-                Text('Category',
+                Text(AppLocalizations.of(context)!.category,
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(height: 8),
                 Wrap(
@@ -323,7 +324,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              _getCategoryLabel(category),
+                              _getCategoryLabel(context, category),
                               style: TextStyle(
                                 color: isSelected
                                     ? AppColors.accent
@@ -357,14 +358,14 @@ class _AddTaskScreenState extends State<AddTaskScreen>
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.add_task, size: 22),
-                        SizedBox(width: 8),
+                        const Icon(Icons.add_task, size: 22),
+                        const SizedBox(width: 8),
                         Text(
-                          'Create Task',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.createTask,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -417,7 +418,7 @@ class _AddTaskScreenState extends State<AddTaskScreen>
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Task created! 🎯'),
+          content: Text(AppLocalizations.of(context)!.taskCreated),
           backgroundColor: AppColors.accent,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -437,14 +438,14 @@ class _AddTaskScreenState extends State<AddTaskScreen>
     }
   }
 
-  String _getPriorityLabel(TaskPriority priority) {
+  String _getPriorityLabel(BuildContext context, TaskPriority priority) {
     switch (priority) {
       case TaskPriority.low:
-        return 'Low';
+        return AppLocalizations.of(context)!.low;
       case TaskPriority.medium:
-        return 'Medium';
+        return AppLocalizations.of(context)!.medium;
       case TaskPriority.high:
-        return 'High';
+        return AppLocalizations.of(context)!.high;
     }
   }
 
@@ -463,18 +464,18 @@ class _AddTaskScreenState extends State<AddTaskScreen>
     }
   }
 
-  String _getCategoryLabel(TaskCategory category) {
+  String _getCategoryLabel(BuildContext context, TaskCategory category) {
     switch (category) {
       case TaskCategory.personal:
-        return 'Personal';
+        return AppLocalizations.of(context)!.personal;
       case TaskCategory.work:
-        return 'Work';
+        return AppLocalizations.of(context)!.work;
       case TaskCategory.health:
-        return 'Health';
+        return AppLocalizations.of(context)!.health;
       case TaskCategory.education:
-        return 'Education';
+        return AppLocalizations.of(context)!.education;
       case TaskCategory.other:
-        return 'Other';
+        return AppLocalizations.of(context)!.other;
     }
   }
 }

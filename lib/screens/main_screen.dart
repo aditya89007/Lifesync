@@ -8,6 +8,7 @@ import 'tasks_list_screen.dart';
 import 'settings_screen.dart';
 import 'add_task_screen.dart';
 import 'add_habit_screen.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -71,11 +72,11 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: _buildBottomNav(isDark),
+      bottomNavigationBar: _buildBottomNav(context, isDark),
     );
   }
 
-  Widget _buildBottomNav(bool isDark) {
+  Widget _buildBottomNav(BuildContext context, bool isDark) {
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
@@ -98,40 +99,50 @@ class _MainScreenState extends State<MainScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _NavItem(
-                    icon: Icons.home_outlined,
-                    activeIcon: Icons.home,
-                    label: 'Home',
-                    isActive: _currentIndex == 0,
-                    onTap: () => _goToPage(0),
+                  Flexible(
+                    child: _NavItem(
+                      icon: Icons.home_outlined,
+                      activeIcon: Icons.home,
+                      label: AppLocalizations.of(context)!.home,
+                      isActive: _currentIndex == 0,
+                      onTap: () => _goToPage(0),
+                    ),
                   ),
-                  _NavItem(
-                    icon: Icons.repeat,
-                    activeIcon: Icons.repeat,
-                    label: 'Habits',
-                    isActive: _currentIndex == 1,
-                    onTap: () => _goToPage(1),
+                  Flexible(
+                    child: _NavItem(
+                      icon: Icons.repeat,
+                      activeIcon: Icons.repeat,
+                      label: AppLocalizations.of(context)!.habits,
+                      isActive: _currentIndex == 1,
+                      onTap: () => _goToPage(1),
+                    ),
                   ),
-                  _NavItem(
-                    icon: Icons.timer_outlined,
-                    activeIcon: Icons.timer,
-                    label: 'Focus',
-                    isActive: _currentIndex == 2,
-                    onTap: () => _goToPage(2),
+                  Flexible(
+                    child: _NavItem(
+                      icon: Icons.timer_outlined,
+                      activeIcon: Icons.timer,
+                      label: AppLocalizations.of(context)!.focus,
+                      isActive: _currentIndex == 2,
+                      onTap: () => _goToPage(2),
+                    ),
                   ),
-                  _NavItem(
-                    icon: Icons.checklist_outlined,
-                    activeIcon: Icons.checklist,
-                    label: 'Tasks',
-                    isActive: _currentIndex == 3,
-                    onTap: () => _goToPage(3),
+                  Flexible(
+                    child: _NavItem(
+                      icon: Icons.checklist_outlined,
+                      activeIcon: Icons.checklist,
+                      label: AppLocalizations.of(context)!.tasks,
+                      isActive: _currentIndex == 3,
+                      onTap: () => _goToPage(3),
+                    ),
                   ),
-                  _NavItem(
-                    icon: Icons.settings_outlined,
-                    activeIcon: Icons.settings,
-                    label: 'Settings',
-                    isActive: _currentIndex == 4,
-                    onTap: () => _goToPage(4),
+                  Flexible(
+                    child: _NavItem(
+                      icon: Icons.settings_outlined,
+                      activeIcon: Icons.settings,
+                      label: AppLocalizations.of(context)!.settings,
+                      isActive: _currentIndex == 4,
+                      onTap: () => _goToPage(4),
+                    ),
                   ),
                 ],
               ),
@@ -177,7 +188,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Create New',
+                AppLocalizations.of(context)!.createNew,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
@@ -186,8 +197,8 @@ class _MainScreenState extends State<MainScreen> {
                   Expanded(
                     child: _AddOptionCard(
                       icon: Icons.add_task,
-                      title: 'New Task',
-                      subtitle: 'Create a to-do',
+                      title: AppLocalizations.of(context)!.newTask,
+                      subtitle: AppLocalizations.of(context)!.createAToDo,
                       color: AppColors.categoryWork,
                       onTap: () {
                         Navigator.pop(context);
@@ -204,8 +215,8 @@ class _MainScreenState extends State<MainScreen> {
                   Expanded(
                     child: _AddOptionCard(
                       icon: Icons.repeat,
-                      title: 'New Habit',
-                      subtitle: 'Build a routine',
+                      title: AppLocalizations.of(context)!.newHabit,
+                      subtitle: AppLocalizations.of(context)!.buildARoutine,
                       color: AppColors.accent,
                       onTap: () {
                         Navigator.pop(context);
@@ -273,6 +284,8 @@ class _NavItem extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: isActive ? AppColors.accent : (
                   Theme.of(context).brightness == Brightness.dark

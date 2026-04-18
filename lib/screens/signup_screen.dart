@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../providers/language_provider.dart';
 import '../theme/app_theme.dart';
 import 'main_screen.dart';
 
@@ -41,6 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
 
     if (success && mounted) {
+      context.read<LanguageProvider>().setLanguage('en');
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const MainScreen()),
         (route) => false,
@@ -321,6 +323,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           : () async {
                                               final success = await auth.signInWithGoogle();
                                               if (success && context.mounted) {
+                                                context.read<LanguageProvider>().setLanguage('en');
                                                 Navigator.of(context).pushAndRemoveUntil(
                                                   MaterialPageRoute(builder: (_) => const MainScreen()),
                                                   (route) => false,

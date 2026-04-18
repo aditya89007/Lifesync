@@ -5,6 +5,7 @@ import '../theme/app_theme.dart';
 import '../widgets/task_card.dart';
 import '../widgets/glass_card.dart';
 import 'edit_task_screen.dart';
+import 'package:lifesync/l10n/app_localizations.dart';
 
 class TasksListScreen extends StatefulWidget {
   const TasksListScreen({super.key});
@@ -45,11 +46,11 @@ class _TasksListScreenState extends State<TasksListScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'All Tasks',
+                          AppLocalizations.of(context)!.allTasks,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          '${taskProvider.tasks.length} total',
+                          AppLocalizations.of(context)!.totalCount(taskProvider.tasks.length),
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
@@ -73,7 +74,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
                                 : AppColors.lightTextPrimary,
                           ),
                       decoration: InputDecoration(
-                        hintText: 'Search tasks...',
+                        hintText: AppLocalizations.of(context)!.searchTasks,
                         prefixIcon:
                             const Icon(Icons.search, color: AppColors.accent),
                         suffixIcon: _searchQuery.isNotEmpty
@@ -112,28 +113,28 @@ class _TasksListScreenState extends State<TasksListScreen> {
                       child: Row(
                         children: [
                           _FilterChip(
-                            label: 'All',
+                            label: AppLocalizations.of(context)!.allFilter,
                             isSelected: _filter == 'all',
                             onTap: () => setState(() => _filter = 'all'),
                             count: taskProvider.tasks.length,
                           ),
                           const SizedBox(width: 8),
                           _FilterChip(
-                            label: 'Pending',
+                            label: AppLocalizations.of(context)!.pendingFilter,
                             isSelected: _filter == 'pending',
                             onTap: () => setState(() => _filter = 'pending'),
                             count: taskProvider.pendingTasks.length,
                           ),
                           const SizedBox(width: 8),
                           _FilterChip(
-                            label: 'Done',
+                            label: AppLocalizations.of(context)!.doneFilter,
                             isSelected: _filter == 'completed',
                             onTap: () => setState(() => _filter = 'completed'),
                             count: taskProvider.completedTasks.length,
                           ),
                           const SizedBox(width: 8),
                           _FilterChip(
-                            label: 'Overdue',
+                            label: AppLocalizations.of(context)!.overdue,
                             isSelected: _filter == 'overdue',
                             onTap: () => setState(() => _filter = 'overdue'),
                             count: taskProvider.overdueTasks.length,
@@ -170,14 +171,14 @@ class _TasksListScreenState extends State<TasksListScreen> {
                             const SizedBox(height: 16),
                             Text(
                               _searchQuery.isNotEmpty
-                                  ? 'No results for "$_searchQuery"'
+                                  ? AppLocalizations.of(context)!.noResultsFor(_searchQuery)
                                   : _filter == 'completed'
-                                      ? 'No completed tasks yet'
+                                      ? AppLocalizations.of(context)!.noCompletedTasksYet
                                       : _filter == 'overdue'
-                                          ? 'No overdue tasks! 🎉'
+                                          ? AppLocalizations.of(context)!.noOverdueTasks
                                           : _filter == 'pending'
-                                              ? 'All caught up! 🎉'
-                                              : 'No tasks yet',
+                                              ? AppLocalizations.of(context)!.allCaughtUp
+                                              : AppLocalizations.of(context)!.noTasksToday,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -190,8 +191,8 @@ class _TasksListScreenState extends State<TasksListScreen> {
                             const SizedBox(height: 4),
                             Text(
                               _searchQuery.isNotEmpty
-                                  ? 'Try a different search term'
-                                  : 'Tap + to create your first task',
+                                  ? AppLocalizations.of(context)!.tryDifferentSearchTerm
+                                  : AppLocalizations.of(context)!.tapToCreateFirstTask,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
