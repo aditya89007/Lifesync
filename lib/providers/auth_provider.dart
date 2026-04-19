@@ -80,28 +80,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> signInWithGoogle() async {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
 
-    try {
-      final credential = await _authService.signInWithGoogle();
-      _isLoading = false;
-      notifyListeners();
-      return credential != null; // Returns true if not cancelled
-    } on FirebaseAuthException catch (e) {
-      _error = _mapAuthError(e.code);
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    } catch (e) {
-      _error = 'Google Sign-In failed. Please try again.';
-      _isLoading = false;
-      notifyListeners();
-      return false;
-    }
-  }
 
   Future<void> signOut() async {
     await _authService.signOut();

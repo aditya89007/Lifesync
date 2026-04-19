@@ -366,58 +366,7 @@ class _LoginScreenState extends State<LoginScreen>
                                         ),
                                       ),
                                       const SizedBox(height: 16),
-                                      // Google Sign In
-                                      SizedBox(
-                                        width: double.infinity,
-                                        height: 52,
-                                        child: OutlinedButton(
-                                          onPressed: auth.isLoading
-                                              ? null
-                                              : () async {
-                                                  final success = await auth.signInWithGoogle();
-                                                  if (success && context.mounted) {
-                                                    context.read<LanguageProvider>().setLanguage('en');
-                                                    Navigator.of(context).pushReplacement(
-                                                      MaterialPageRoute(builder: (_) => const MainScreen()),
-                                                    );
-                                                  }
-                                                },
-                                          style: OutlinedButton.styleFrom(
-                                            side: BorderSide(
-                                                color: Colors.white.withValues(alpha: 0.2)),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(14),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                padding: const EdgeInsets.all(4),
-                                                decoration: const BoxDecoration(
-                                                  color: Colors.white,
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: const Text(' G ', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 16, height: 1.0)),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              const Flexible(
-                                                child: FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: Text(
-                                                    'Continue with Google',
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight: FontWeight.w600,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+
                                     ],
                                   ),
                                 );

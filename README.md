@@ -10,7 +10,7 @@ Perfect for students, professionals, and anyone looking to take control of their
 
 ## ✨ Features
 
-- **🔐 Secure Authentication:** Email/Password and Google Sign-In via Firebase Auth.
+- **🔐 Secure Authentication:** Email/Password via Firebase Auth.
 - **📝 Task Management:** Create, edit, prioritize, and categorize daily tasks with due dates.
 - **⚠️ Overdue Tracking:** Automatically highlights overdue tasks for quick action.
 - **📅 Calendar View:** Horizontal date selector to browse tasks by day.
@@ -37,7 +37,7 @@ Perfect for students, professionals, and anyone looking to take control of their
 | **IDE** | Android Studio / VS Code |
 | **Min SDK** | Android 6.0 (Marshmallow - API 23) or higher |
 | **State Management** | Provider |
-| **Authentication** | Firebase Auth + Google Sign-In |
+| **Authentication** | Firebase Auth |
 | **Database** | Cloud Firestore (Real-time sync) |
 | **Notifications** | flutter_local_notifications |
 | **UI Design** | Custom Glassmorphism, Material 3, Google Fonts |
@@ -68,7 +68,7 @@ Perfect for students, professionals, and anyone looking to take control of their
 
 3. **Configure Firebase:**
    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Enable **Email/Password** and **Google Sign-In** in Authentication
+   - Enable **Email/Password** in Authentication
    - Create a **Cloud Firestore** database
    - Download `google-services.json` and place it in `android/app/`
 
@@ -158,7 +158,7 @@ The release `.aab` file for the Google Play Store is signed using a secure Keyst
 
 ### 1. Data Collection & Usage
 
-- **Account Information:** Email address, Name, and Profile Picture are collected via Google Sign-In or manual sign-up for the purpose of user authentication.
+- **Account Information:** Email address, Name, and Profile Picture are collected via manual sign-up for the purpose of user authentication.
 - **App Data:** Tasks, Habits, streaks, and schedules are synced securely to Firebase Firestore to provide a seamless cross-device experience.
 - **Usage Data:** Basic device information and crash logs may be collected to improve app stability.
 
