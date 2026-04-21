@@ -392,6 +392,18 @@ class SettingsScreen extends StatelessWidget {
                                             ),
                                             textAlign: TextAlign.center,
                                           ),
+                                          const SizedBox(height: 12),
+                                          Text(
+                                            'Guided by Prof. Jigar Dave',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: isDark
+                                                  ? AppColors.darkTextSecondary
+                                                  : AppColors.lightTextSecondary,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
                                           const SizedBox(height: 32),
                                           SizedBox(
                                             width: double.infinity,
@@ -406,7 +418,7 @@ class SettingsScreen extends StatelessWidget {
                                                 elevation: 0,
                                               ),
                                               child: const Text(
-                                                'Cool!',
+                                                'Close',
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,
